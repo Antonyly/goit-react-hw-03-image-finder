@@ -1,4 +1,4 @@
-
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { BallTriangle } from 'react-loader-spinner';
 import s from './loader.module.css';
 

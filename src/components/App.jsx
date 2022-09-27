@@ -24,7 +24,7 @@ export default class App extends Component {
   };
 
 
-      componentDidUpdate(_, prevState) {
+      componentDidUpdate(prevProps, prevState) {
         const { page, search } = this.state;
         if (page > prevState.page || search !== prevState.search) {
             this.fetchPhotos();
