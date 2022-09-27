@@ -8,7 +8,7 @@ import Searchbar from './Searchbar';
 import ImageGallery from "./ImageGallery";
 import Modal from './Modal';
 import Button from './Button';
-import { Loader } from './Loader/Loader';
+// import { Loader } from './Loader/Loader';
 import { getPhotos } from '../shared/services/services';
 
 
@@ -113,7 +113,7 @@ export default class App extends Component {
         {!error && (
          <ImageGallery onClick={showModal} items={items} />
         )}
-        {loading && <Loader />}
+        {/* {loading && <Loader />} */}
         {!loading && items.length >= 12 && <Button onClick={loadMore} text="Load more" />}
         <ToastContainer position="top-right" autoClose={5000} theme="dark"/>
       </div>
