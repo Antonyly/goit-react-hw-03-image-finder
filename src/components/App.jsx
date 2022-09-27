@@ -8,7 +8,7 @@ import Searchbar from './Searchbar';
 import ImageGallery from "./ImageGallery";
 import Modal from './Modal';
 import Button from './Button';
-import Loader from './Loader';
+import { Loader } from './Loader/Loader';
 import { getPhotos } from '../shared/services/services';
 
 
