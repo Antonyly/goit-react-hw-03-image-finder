@@ -1,5 +1,5 @@
 import { Component } from "react";
-import s from 'app.module.css';
+import s from './Searchbar/app.module.css';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -97,7 +97,7 @@ export default class App extends Component {
 
 
     return (
-      <div className={s.app}>
+      <div className={s.container}>
       {modalOpen && (
           <Modal closeModal={closeModal}>
             <img
