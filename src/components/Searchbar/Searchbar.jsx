@@ -36,8 +36,8 @@ class SearchBar extends Component {
                         <input
                         className={s.input}
                         type="text"
-                        autocomplete="off"
-                        autofocus
+                        autoComplete="off"
+                        autoFocus
                         placeholder="Search images and photos"
                         onChange={handleChange}
                         />
@@ -45,7 +45,8 @@ class SearchBar extends Component {
                         <span className={s.button_label}>Search</span>
                         <BiSearch className={ s.search_icon} />
                         </button>
-                    </form>
+                </form>
+
                 </header>
             )
     }
