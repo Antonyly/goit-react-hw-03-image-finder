@@ -1,5 +1,5 @@
 // import { Watch } from 'react-loader-spinner';
-// import s from './loader.module.css';
+import s from './loader.module.css';
 
 // const Loader = () => {
 //   return (
@@ -10,13 +10,13 @@
 // };
 
 
-// import { Audio } from 'react-loader-spinner';
+import { Audio } from 'react-loader-spinner';
 
-// const Loader = () => {
-//   return (
-//     <div className={s.loader}>
-//       <Audio width="200" color="#4fa94d" />
-//     </div>
-//   );
-// };
-// export default Loader;
+const Loader = () => {
+  return (
+    <div className={s.loader}>
+      <Audio width="200" color="#4fa94d" />
+    </div>
+  );
+};
+export default Loader;
