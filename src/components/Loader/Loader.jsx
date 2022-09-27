@@ -12,11 +12,11 @@ import s from './loader.module.css';
 
 import { Audio } from 'react-loader-spinner';
 
-const Loader = () => {
+export const Loader = () => {
   return (
     <div className={s.loader}>
       <Audio width="200" color="#4fa94d" />
     </div>
   );
 };
-export default Loader;
+// export default Loader;
