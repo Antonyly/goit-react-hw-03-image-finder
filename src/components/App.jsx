@@ -1,66 +1,122 @@
-import React, { Component } from "react";
-import { ContactForm } from './ContactForm/ContactForm'
-import { ContactList } from './ContactList/ContactList'
-import { Filter } from './Filter/Filter'
-import css from './ContactForm/ContactForm.module.css'
+import { Component } from "react";
+import s from './app.module.css';
 
-export class App extends Component {
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+import Searchbar from './Searchbar';
+import ImageGallery from "./ImageGallery";
+import Modal from './Modal';
+import Button from './Button';
+import Loader from './Loader';
+import { getPhotos } from '../shared/services/services';
+
+
+export default class App extends Component {
   state = {
-    contacts: [
-      { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-      { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-      { id: "id-3", name: "Eden Clements", number: "645-17-79" },
-      { id: "id-4", name: "Annie Copeland", number: "227-91-26" },],
-    filter: ''
-  }
+    items: [],
+    loading: false,
+    search: '',
+    page: 1,
+    modalOpen: false,
+    modalContent: {},
+    error: null,
+  };
 
-  isDuplicate = ({ name }) => {
-    const { contacts } = this.state
-    const result = contacts.find(contactItem => contactItem.name.toLowerCase() === name.toLowerCase())
-    return result
-  }
 
-  addContact = (contactObject) => {
-    if (this.isDuplicate(contactObject)) {
-      return alert(`${contactObject.name} is alredy in contacts`)
+      componentDidUpdate(_, prevState) {
+        const { page, search } = this.state;
+        if (page > prevState.page || search !== prevState.search) {
+            this.fetchPhotos();
+        }
+      }
+
+  async fetchPhotos() {
+        this.setState({
+          loading: true,
+          error: null,
+        })
+        const { search, page } = this.state;
+        try {
+          const data = await getPhotos(search, page);
+           const totalPages = Math.ceil(data.totalHits / 12);
+
+            this.setState(({ items }) => {
+                return {
+                  items: [...items, ...data.hits],
+                }
+            })
+          if ( data.hits.length === 0) {
+          return toast.error('Sorry, no images found');
+          }
+          if (page === totalPages) {
+          toast.info("These are all pictures. Try entering something else in the field!");
+        }
+        } catch (error) {
+            this.setState({
+              error: error,
+            })
+        } finally {
+      this.setState({ loading: false });
+    }
+    }
+  
+  changeSearch = ({ search }) => {
+        this.setState({
+            search,
+            items: []
+        })
+    }
+  loadMore = () => {
+        this.setState(({ page }) => {
+            return {
+                page: page + 1
+            }
+        })
     }
 
-    return this.setState(prevState => ({
-      contacts: [...prevState.contacts, contactObject],
-    }))
-  }
-
-  handlerFilterChange = (e) => {
+  showModal = (url, tags) => {
     this.setState({
-      filter: e.currentTarget.value
-    }) 
-  }
-
-  deleteContact = (id) => {
-    const { contacts } = this.state
-    const newContacts = contacts.filter(contact => contact.id !== id)
-    return this.setState({
-      contacts: newContacts
-    })    
-  }
- 
-
-  render() {
-    const { contacts, filter } = this.state
-    const {addContact, handlerFilterChange, deleteContact} = this
-
-    const filtredContacts = contacts.filter(({name}) => name.toLowerCase().includes(filter.toLowerCase()))
-    
-    return (
-      <div className={ css.div}>
-      <h1>Phonebook</h1>
-      <ContactForm addContact={addContact} />
+      modalOpen: true,
+      modalContent: {
+        src: url,
+        alt: tags,
+      },
+    });
+  };
   
-      <h2>Contacts</h2>
-      <Filter value={filter} onChange={handlerFilterChange} />
-      <ContactList contacts={filtredContacts} handleClick={deleteContact} />      
-    </div>
-  );
+  closeModal = () => {
+    this.setState({
+      modalOpen: false,
+    });
+  };
+  
+  render() {
+    const { items, loading, error, modalOpen, modalContent} = this.state;
+    const { loadMore, changeSearch, showModal, closeModal } = this;
+
+
+    return (
+      <div className={s.app}>
+      {modalOpen && (
+          <Modal closeModal={closeModal}>
+            <img
+              src={modalContent.src}
+              alt={modalContent.alt}
+            />
+          </Modal>
+        )}
+        <Searchbar onSubmit={changeSearch} />
+        {  error && <h2>The gallery is empty</h2>}
+
+        
+        {!error && (
+         <ImageGallery onClick={showModal} items={items} />
+        )}
+        {loading && <Loader />}
+        {!loading && items.length >= 12 && <Button onClick={loadMore} text="Load more" />}
+        <ToastContainer position="top-right" autoClose={5000} theme="dark"/>
+      </div>
+    );
   }
-};
+}
