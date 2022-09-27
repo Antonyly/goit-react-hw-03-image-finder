@@ -10,13 +10,13 @@
 // };
 
 
-import { Audio } from 'react-loader-spinner';
-import css from './loader.module.css';
-const Loader = () => {
-  return (
-    <div className={css.loader}>
-      <Audio width="200" color="#4fa94d" />
-    </div>
-  );
-};
-export default Loader;
+// import { Audio } from 'react-loader-spinner';
+
+// const Loader = () => {
+//   return (
+//     <div className={s.loader}>
+//       <Audio width="200" color="#4fa94d" />
+//     </div>
+//   );
+// };
+// export default Loader;
