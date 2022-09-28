@@ -24,7 +24,7 @@ export default class App extends Component {
   };
 
 
-      componentDidUpdate(prevProps, prevState) {
+      componentDidUpdate(_, prevState) {
         const { page, search } = this.state;
         if (page > prevState.page || search !== prevState.search) {
             this.fetchPhotos();
@@ -61,11 +61,23 @@ export default class App extends Component {
     }
     }
   
-  changeSearch = ({ search }) => {
-        this.setState({
-            search,
-            items: []
-        })
+  changeSearch = (e) => {
+    // e.preventDefault()
+        // this.setState({
+        //     search,
+        //     items: []
+        // })
+    const { search } = this.state;
+    const newSearch = e.target.elements.searchQuery.value;
+    console.log(newSearch);
+    // console.log(newSearch);
+    // if (search !== newSearch) {
+    //     this.setState({
+    //         search,
+    //         items: []
+    //     })
+    // }
+
     }
   loadMore = () => {
         this.setState(({ page }) => {
