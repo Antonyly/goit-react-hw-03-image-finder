@@ -17,7 +17,7 @@ export default class App extends Component {
   state = {
     items: [],
     loading: false,
-    search: '',
+    querry: '',
     page: 1,
     modalOpen: false,
     modalContent: {},
@@ -26,8 +26,8 @@ export default class App extends Component {
 
 
       componentDidUpdate(_, prevState) {
-        const { page, search } = this.state;
-        if (page > prevState.page || search !== prevState.search) {
+        const { page, querry } = this.state;
+        if (page > prevState.page || querry !== prevState.querry) {
             this.fetchPhotos();
         }
       }
@@ -37,9 +37,9 @@ export default class App extends Component {
           loading: true,
           error: null,
         })
-        const { search, page } = this.state;
+        const { querry, page } = this.state;
         try {
-          const data = await getPhotos(search, page);
+          const data = await getPhotos(querry, page);
            const totalPages = Math.ceil(data.totalHits / 12);
 
             this.setState(({ items }) => {
@@ -62,35 +62,26 @@ export default class App extends Component {
     }
     }
   
-  changeSearch = (querry) => {
-    // console.log(querry)
-    // const { search } = this.state;
-
-    console.log(querry)
-
-    // if (querry !== search) {
-        // this.setState({
-        //     search,
-        //     items: []
-        // })
-      // }
-    
-    
-    // const { search } = this.state;
-    // const newSearch = e.target.elements.searchQuery.value;
-    // console.log(newSearch);
-    // console.log(newSearch);
-
-    this.setState(({ search }) => {
-      if (querry !== search) {
-      return {
-        search: querry,
+  changeQuerry = ({ querry }) => {
+          this.setState({
+        querry,
         items: [],
+        page: 1,
       }
-    }
-    });
-
-    }
+      )
+  }
+                                  /*     Don`t work( */
+  // changeQuerry = (n) => {
+  //   this.setState(({ querry }) => {
+  //     if (n !== querry)
+  //     return {
+  //       querry: n,
+  //       items: [],
+  //       page: 1
+  //     }
+  //   });
+  //   }
+  
   loadMore = () => {
         this.setState(({ page }) => {
             return {
@@ -117,7 +108,7 @@ export default class App extends Component {
   
   render() {
     const { items, loading, error, modalOpen, modalContent} = this.state;
-    const { loadMore, changeSearch, showModal, closeModal } = this;
+    const { loadMore, changeQuerry, showModal, closeModal } = this;
 
 
     return (
@@ -130,7 +121,7 @@ export default class App extends Component {
             />
           </Modal>
         )}
-        <Searchbar onSubmit={changeSearch} />
+        <Searchbar onSubmit={changeQuerry} />
         {  error && <h2>The gallery is empty</h2>}
 
         

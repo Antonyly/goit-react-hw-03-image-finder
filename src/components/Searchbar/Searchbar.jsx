@@ -8,30 +8,30 @@ import s from './searchbar.module.css';
 
 class SearchBar extends Component {
     state = {
-        search: '',
+        querry: '',
     }
 
-    // handleChange = ({target}) => {
-    //     const {value} = target;
-    //     this.setState({
-    //         search: value,
-    //     })
-    // }
-        handleInput = (event) => {
-        this.setState({ search: event.currentTarget.value.toLowerCase() });
+    handleChange = ({target}) => {
+        const {value} = target;
+        this.setState({
+            querry: value,
+        })
     }
+    //     handleInput = (event) => {
+    //     this.setState({ querry: event.currentTarget.value.toLowerCase() });
+    // }
 
     handleSubmit = (e) => {
         e.preventDefault();
         const {onSubmit} = this.props;
         onSubmit({...this.state});
         this.setState({
-            search: ""
+            querry: ""
         })
     }
 
     render() {
-        const { handleChange, handleSubmit, handleInput } = this;
+        const { handleChange, handleSubmit } = this;
         
         return (
                 <header className={s.searchbar}>
@@ -42,7 +42,7 @@ class SearchBar extends Component {
                         autoComplete="off"
                         autoFocus
                         placeholder="Search images and photos"
-                        onInput={handleInput}
+                        onChange={handleChange}
                         />
                         <button type="submit" className={s.button}>
                         <span className={s.button_label}>Search</span>
