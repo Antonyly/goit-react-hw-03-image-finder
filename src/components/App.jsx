@@ -61,27 +61,18 @@ export default class App extends Component {
       this.setState({ loading: false });
     }
     }
-  
+
   changeQuerry = ({ querry }) => {
-          this.setState({
+    if (this.state.querry !== querry) {
+      this.setState({
         querry,
         items: [],
-        page: 1,
-      }
-      )
-  }
-                                  /*     Don`t work( */
-  // changeQuerry = (n) => {
-  //   this.setState(({ querry }) => {
-  //     if (n !== querry)
-  //     return {
-  //       querry: n,
-  //       items: [],
-  //       page: 1
-  //     }
-  //   });
-  //   }
-  
+        page: 1
+
+      });
+    };
+  };
+
   loadMore = () => {
         this.setState(({ page }) => {
             return {
