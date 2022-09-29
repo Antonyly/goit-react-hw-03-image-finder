@@ -2,7 +2,7 @@ import React from "react";
 
 import { Component } from 'react';
 import PropTypes from "prop-types";
-// import { FaBeer } from 'react-icons/fa';
+
 import { BiSearch } from "react-icons/bi";
 import s from './searchbar.module.css';
 
@@ -11,11 +11,14 @@ class SearchBar extends Component {
         search: '',
     }
 
-    handleChange = ({target}) => {
-        const {value} = target;
-        this.setState({
-            search: value,
-        })
+    // handleChange = ({target}) => {
+    //     const {value} = target;
+    //     this.setState({
+    //         search: value,
+    //     })
+    // }
+        handleInput = (event) => {
+        this.setState({ search: event.currentTarget.value.toLowerCase() });
     }
 
     handleSubmit = (e) => {
@@ -28,7 +31,7 @@ class SearchBar extends Component {
     }
 
     render() {
-        const { handleChange, handleSubmit } = this;
+        const { handleChange, handleSubmit, handleInput } = this;
         
         return (
                 <header className={s.searchbar}>
@@ -39,7 +42,7 @@ class SearchBar extends Component {
                         autoComplete="off"
                         autoFocus
                         placeholder="Search images and photos"
-                        onChange={handleChange}
+                        onInput={handleInput}
                         />
                         <button type="submit" className={s.button}>
                         <span className={s.button_label}>Search</span>

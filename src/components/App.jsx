@@ -1,4 +1,5 @@
 import { Component } from "react";
+
 import s from './app.module.css';
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -61,22 +62,33 @@ export default class App extends Component {
     }
     }
   
-  changeSearch = (e) => {
-    // e.preventDefault()
+  changeSearch = (querry) => {
+    // console.log(querry)
+    // const { search } = this.state;
+
+    console.log(querry)
+
+    // if (querry !== search) {
         // this.setState({
         //     search,
         //     items: []
         // })
-    const { search } = this.state;
-    const newSearch = e.target.elements.searchQuery.value;
-    console.log(newSearch);
+      // }
+    
+    
+    // const { search } = this.state;
+    // const newSearch = e.target.elements.searchQuery.value;
     // console.log(newSearch);
-    // if (search !== newSearch) {
-    //     this.setState({
-    //         search,
-    //         items: []
-    //     })
-    // }
+    // console.log(newSearch);
+
+    this.setState(({ search }) => {
+      if (querry !== search) {
+      return {
+        search: querry,
+        items: [],
+      }
+    }
+    });
 
     }
   loadMore = () => {
